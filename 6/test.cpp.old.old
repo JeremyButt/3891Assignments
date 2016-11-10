@@ -1,0 +1,18 @@
+#include "Carriage.h"
+#include "Pumpkin.h"
+#include "PumpkinPatch.h"
+#include <iostream>
+using namespace std;
+
+
+int date = 0;
+
+int currentDate()
+{
+   return date++;
+}
+
+
+int (){
+  return 0;
+}

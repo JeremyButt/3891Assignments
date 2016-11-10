@@ -1,0 +1,56 @@
+/*!
+ * @file      Carriage.cpp
+ * @brief     Definition of the Carriage class.
+ *
+ * @author    Jeremy Butt <jeremybutt@mun.ca>
+ */
+
+ #include <iostream>
+ #include <vector>
+ #include "Pumpkin.h"
+ #include "Carriage.h"
+ using namespace std;
+
+ int date = 0;
+
+ int currentDate()
+ {
+    return date++;
+ }
+
+int main(int argc, char *argv[]){
+
+  Pumpkin* p = Pumpkin::Create(Pumpkin::Colour::Teal);
+
+  cout << p->Pumpkin::carved() << endl;
+
+  p->Pumpkin::carve();
+
+  cout << p->Pumpkin::carved() << endl;
+
+  try {   // needs new error handling
+    p->carve();
+  }
+  catch(string message){
+    PumpkinException error(message);
+
+
+  cout << error.PumpkinException::message() << endl;
+}
+std::vector<Pumpkin> v = Pumpkin::CreatePumpkins(16, Pumpkin::Colour::Teal, true);
+
+if (v.at(5).carved() == true){cout << "The Pumpkin is Carved" << endl;}
+
+Carriage TEST(Pumpkin::Colour::Teal);
+
+cout << currentDate() << endl;
+
+Pumpkin* T = TEST.change();
+
+cout << currentDate() << endl;
+
+cout << T->carved() << endl;
+
+
+  return 0;
+}
