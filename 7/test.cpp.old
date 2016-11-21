@@ -1,0 +1,17 @@
+#include "Expression.h"
+#include <iostream>
+#include <string>
+using namespace std;
+using namespace calc;
+
+
+int main(int argc, char const *argv[]) {
+
+  ExpPtr x = Expression::Literal(2);
+  ExpPtr y = Expression::Literal(2);
+
+  cout << y->evaluate() << endl;
+  cout << x->evaluate() << endl;
+
+  return 0;
+}
