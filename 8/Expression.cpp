@@ -13,47 +13,48 @@ double Expression::evaluate() const{
 }
 
 ExpPtr Expression::Parse(string s){
-  cout << "parsing: '" << s << "'" << endl;
-
-	// First, find the left-hand side and use the std::stof() function
-	// to convert it into a number:
-	string lhsStr = GetNumber(s);
+	// find number within the string and then convert to a double and the convert to an ExpPtr.
+	string lhsStr = FindNumber(s);
 	double LHS = stof(lhsStr);
   ExpPtr lhs = Literal(LHS);
 
-	// Find the operator:
-	size_t operatorPosition = lhsStr.length();
-	if (operatorPosition == s.length())
+	// Find where the operator is located within the string
+  // Find if there is an operator
+	size_t opPosition = lhsStr.length();
+	if (opPosition == s.length())
 	{
 		throw string("'" + s + "' contains no operator");
 	}
-
-	while (operatorPosition < s.length() and s[operatorPosition] == ' ')
+  // Find the operator Position when there is whitespace around it.
+	while (opPosition < s.length() and s[opPosition] == ' ')
 	{
-		operatorPosition++;
+		opPosition++;
 	}
 
-	char op = s[operatorPosition];
+  // Record what character (ie. the operator) is at the operator position.
+	char op = s[opPosition];
+  // Check to see if the operator is supported by the parsing code.
 	if (op != '+' && op != '*')
 	{
 		throw string("unsupported operator: " + string(1, op));
 	}
 
-	// Skip any more spaces:
-	size_t nextStart = operatorPosition + 1;
-	while (nextStart < s.length() and s[nextStart] == ' ')
+	// Continue on to find the next number after the operator.
+	size_t resetStart = opPosition + 1;
+	while (resetStart < s.length() and s[resetStart] == ' ')
 	{
-		nextStart++;
+		resetStart++;
 	}
 
-	// Find the next number:
-	const string theRest = s.substr(nextStart);
-	string next = GetNumber(theRest);
+	// remove the part of the string that has been properly parsed.
+	const string restofString = s.substr(resetStart);
+	string next = FindNumber(restofString);
 
-	if (next.length() == theRest.length())
+  // Check to see if the rest of the string is only a number or if it is more operations.
+	if (next.length() == restofString.length())
 	{
-		// The whole rest of the string is a number.
-		double RHS = stof(theRest);
+		// The entire sting next is the number number. (most cases)
+		double RHS = stof(restofString);
     ExpPtr rhs = Literal(RHS);
 
     if (op == '+'){
@@ -64,17 +65,20 @@ ExpPtr Expression::Parse(string s){
     }
 	}
 
-	// Otherwise, the rest of the string is an expression to be parsed:
-	ExpPtr rhs = Parse(theRest);
+	// If the rest of the string is more operators we have to start parsing again.
+	ExpPtr rhs = Parse(restofString);
 }
 
-bool Expression::IsNumber(char c)
+
+bool Expression::IsNumber(char x)
 {
-	return (c >= '0' and c <= '9');
+  // Check to see if the character is within the numerical characters.
+	return (x <= '9' && x >= '0');
 }
 
-string Expression::GetNumber(const string& s)
+string Expression::FindNumber(const string& s)
 {
+  // see if the string is empty or if it does not start with a number.
 	if (s.empty() or not IsNumber(s[0]))
 	{
 		throw string("'" + s + "' does not start with a number");
@@ -83,10 +87,12 @@ string Expression::GetNumber(const string& s)
 	// Find the first character that is not part of a number:
 	for (size_t i = 0; i < s.length(); i++)
 	{
-		const bool number = IsNumber(s[i]);
-		const bool decimal = (s[i] == '.');
+    // See if there is a number or a decimal at the point.
+		const bool ISnumber = IsNumber(s[i]);
+		const bool ISdecimal = (s[i] == '.');
 
-		if (not number and not decimal)
+    // if not return string with removed whitespace/invalid characters.
+		if (!ISnumber && !ISdecimal)
 		{
 			return s.substr(0, i);
 		}

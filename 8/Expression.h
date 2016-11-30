@@ -51,7 +51,10 @@ public:
 	 */
 	static ExpPtr Parse(std::string);
 
-	static string GetNumber(const string& s);
+	// Function to find number in a string
+	static string FindNumber(const string& s);
+
+	// Function to check if the character is withing the numerical characters.
 	static bool IsNumber(char c);
 
 	//! Construct the simplest expression: a literal value.
