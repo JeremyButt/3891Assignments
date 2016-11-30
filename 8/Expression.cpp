@@ -17,6 +17,7 @@ ExpPtr Expression::Parse(string s){
 	string lhsStr = FindNumber(s);
 	double LHS = stof(lhsStr);
   ExpPtr lhs = Literal(LHS);
+  cout << "found number1" << endl;
 
 	// Find where the operator is located within the string
   // Find if there is an operator
@@ -49,6 +50,7 @@ ExpPtr Expression::Parse(string s){
 	// remove the part of the string that has been properly parsed.
 	const string restofString = s.substr(resetStart);
 	string next = FindNumber(restofString);
+    cout << "found number2" << endl;
 
   // Check to see if the rest of the string is only a number or if it is more operations.
 	if (next.length() == restofString.length())
@@ -67,6 +69,12 @@ ExpPtr Expression::Parse(string s){
 
 	// If the rest of the string is more operators we have to start parsing again.
 	ExpPtr rhs = Parse(restofString);
+  if (op == '+'){
+      return BinaryOperation::Add(move(lhs), move(rhs));
+  }
+  if (op == '*'){
+      return BinaryOperation::Multiply(move(lhs), move(rhs));
+  }
 }
 
 
