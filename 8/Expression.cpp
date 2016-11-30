@@ -79,9 +79,9 @@ bool Expression::IsNumber(char x)
 string Expression::FindNumber(const string& s)
 {
   // see if the string is empty or if it does not start with a number.
-	if (s.empty() or not IsNumber(s[0]))
+	if (s.empty())
 	{
-		throw string("'" + s + "' does not start with a number");
+		throw string("'" + s + "' is empty");
 	}
 
 	// Find the first character that is not part of a number:
@@ -90,9 +90,9 @@ string Expression::FindNumber(const string& s)
     // See if there is a number or a decimal at the point.
 		const bool ISnumber = IsNumber(s[i]);
 		const bool ISdecimal = (s[i] == '.');
-
+		const bool ISwhitespace = (s[i] == ' ');
     // if not return string with removed whitespace/invalid characters.
-		if (!ISnumber && !ISdecimal)
+		if (!ISnumber && !ISdecimal && !ISwhitespace)
 		{
 			return s.substr(0, i);
 		}

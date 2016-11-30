@@ -195,7 +195,7 @@ Division TEST
 	else
 		cout << "Test 3: FAILED" << endl << endl;
 
-	try{ExpPtr MultParseTEST = Expression::Parse("4 * 5");
+	try{ExpPtr MultParseTEST = Expression::Parse(" 4 * 5 ");
 	cout << MultParseTEST->evaluate() << endl;
 	if (MultParseTEST->evaluate() == 20)
 		cout << "Test MultParseTEST: PASSED" << endl << endl;
