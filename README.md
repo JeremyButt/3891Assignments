@@ -1,6 +1,6 @@
 # 3891Assignments
 Repo for all my completed 3891 assignments.
-Header Files were written by Dr. Johnathan Anderson (PhD). Respective licencing and correspondence is located in the particular header files.
+Header Files were written by Dr. Jonathan Anderson (PhD). Respective licencing and correspondence is located in the particular header files.
 
 ##Grades Recieved on Assignments##
 
